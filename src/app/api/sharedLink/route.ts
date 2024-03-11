@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import SharedLink from "@/models/sharedLink";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions";
 import { connectMongoDB } from "@/lib/mongodb";
-import {createSharedLink} from "@/lib/sharedLinkService";
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "1mb",
-    },
-  },
-  // Specifies the maximum allowed duration for this function to execute (in seconds)
-  maxDuration: 5,
-};
+import { createSharedLink } from "@/lib/sharedLinkService";
+import { pusherServer } from "@/socketi";
+export const dynamic = "auto";
+export const dynamicParams = true;
+export const revalidate = false;
+export const fetchCache = "auto";
+export const runtime = "nodejs";
+export const preferredRegion = "auto";
+export const maxDuration = 5;
 
 export async function GET(req: NextRequest) {
   const _page = parseInt(
@@ -46,7 +44,23 @@ export async function POST(req: Request) {
   }
 
   await connectMongoDB();
-  await createSharedLink(data, session?.user?.email!);
+  try {
+    const sharedLink = await createSharedLink(data, session?.user?.email!);
+    const res = await pusherServer.trigger(
+      "video-channel",
+      "evt::new-video",
+      sharedLink,
+    );
+  } catch (e: any) {
+    return NextResponse.json(
+      {
+        message: e.message,
+      },
+      {
+        status: 503,
+      },
+    );
+  }
   return NextResponse.json({
     ok: 1,
   });
