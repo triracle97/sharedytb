@@ -63,7 +63,8 @@ export default function VideoInfiniteList() {
   useEffect(() => {
     const newSharedLink: Array<SharedLinkObj> = [];
     sharedLinkData?.forEach((data: Array<SharedLinkObj>) => {
-      newSharedLink.push(...data);
+      if (data)
+        newSharedLink.push(...data);
     });
     setSharedLink(newSharedLink);
   }, [sharedLinkData]);
