@@ -7,15 +7,15 @@ export const pusherServer = new PusherServer({
   secret: "app-secret",
   cluster: "",
   useTLS: false,
-  host: "127.0.0.1",
+  host: process.env.NEXT_PUBLIC_PUSH_SERVER_HOST,
   port: "6001",
 });
 
 export const pusherClient = new PusherClient("app-key", {
   cluster: "",
-  httpHost: "127.0.0.1",
+  httpHost: process.env.NEXT_PUBLIC_PUSH_SERVER_HOST,
   httpPort: 6001,
-  wsHost: "127.0.0.1",
+  wsHost: process.env.NEXT_PUBLIC_PUSH_SERVER_HOST,
   wsPort: 6001,
   wssPort: 6001,
   forceTLS: false,
