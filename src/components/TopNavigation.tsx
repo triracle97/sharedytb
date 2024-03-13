@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 import Link from "next/link";
 import { Youtube } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -20,15 +20,20 @@ export default function TopNavigation() {
             Shared Youtube URL
           </span>
         </Link>
-        {session.status === "unauthenticated" ? (
+        {session.status !== "authenticated" ? (
           <LoginForm />
         ) : (
-          <div className={"flex items-center"}>
-            <p className={"mr-3"}>Hello {session.data?.user?.email}</p>
-            <button onClick={() => router.push('add')} className="bg-red-500 text-white font-bold cursor-pointer px-6 py-1">
-              Add
-            </button>
-          </div>
+            <div className={"flex items-center"}>
+              <p className={"mr-3"}>Hello {session.data?.user?.email}</p>
+              <button onClick={() => signOut()}
+                      className="bg-red-500 text-white font-bold cursor-pointer px-6 py-1 mr-4">
+                Sign out
+              </button>
+              <button onClick={() => router.push('add')}
+                      className="bg-red-500 text-white font-bold cursor-pointer px-6 py-1">
+                Add
+              </button>
+            </div>
         )}
       </div>
     </nav>
