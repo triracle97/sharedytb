@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+  soketi:
+    image: quay.io/soketi/soketi:1.4-16-debian
+    container_name: soketi
+    ports:
+      - "6001:6001"
+      - "9601:9601"

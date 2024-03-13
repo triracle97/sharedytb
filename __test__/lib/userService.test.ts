@@ -29,7 +29,7 @@ describe("User service test", () => {
   });
 
   test("Test sign in with exists credentials", async () => {
-    const user = await signInWithCredentials("test@gmail.com", "1234567");
-    expect(user).toEqual(null);
+    const user = await signInWithCredentials("test@gmail.com", "123456");
+    expect(user.email).toEqual("test@gmail.com");
   });
 });

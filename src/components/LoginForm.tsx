@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import {toast} from "react-toastify";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ export default function LoginForm() {
       });
 
       if (res?.error) {
-        // todo: add sth here
+        toast.error('Wrong password');
         return;
       }
 

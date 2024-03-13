@@ -10,7 +10,7 @@ export default function ({
   name: string;
   sharedBy: string
 }>) {
-  const id = path.split("?v=")[1].split('&')[0];
+  const id = path.split("?v=")[1]?.split('&')[0];
 
   const embedlink = "http://www.youtube.com/embed/" + id; //www.youtube.com/embed/sGbxmsDFVnE
 

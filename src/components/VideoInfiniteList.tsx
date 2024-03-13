@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Video from "@/components/Video";
-import { pusherClient } from "@/socketi";
+import { pusherClient } from "../socketi";
 import { toast } from "react-toastify";
 import { ArrowUp } from "lucide-react";
 //@ts-ignore
@@ -91,7 +91,7 @@ export default function VideoInfiniteList() {
           dataLength={sharedLink?.length ? sharedLink.length : 0} //This is important field to render the next data
           next={() => setSize(size + 1)}
           hasMore={true}
-          loader={<>Loading...</>}
+          loader={<></>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>Yay! You have seen it all</b>
@@ -102,7 +102,7 @@ export default function VideoInfiniteList() {
           pullDownToRefresh={false}
         >
           {!sharedLink || sharedLink?.length === 0 ? (
-            <div className={"flex flex-col justify-center items-center"}>
+            <div className={"flex flex-col justify-center items-center video mt-10"}>
               <p>
                 There is no shared link now
                 {session.status === "authenticated"
