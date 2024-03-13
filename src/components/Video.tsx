@@ -12,7 +12,7 @@ export default function ({
 }>) {
   const id = path.split("?v=")[1]?.split('&')[0];
 
-  const embedlink = "http://www.youtube.com/embed/" + id; //www.youtube.com/embed/sGbxmsDFVnE
+  const embedlink = "https://www.youtube.com/embed/" + id; //www.youtube.com/embed/sGbxmsDFVnE
 
   return (
     <div className={"mt-5"}>
